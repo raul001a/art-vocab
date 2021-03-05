@@ -1,0 +1,73 @@
+﻿<!doctype html>
+<html lang="fr-fr">
+<head>
+	<meta charset="utf-8">
+
+	<meta name="description" content="Apprenez le vocabulaire de l'Anglais pour l'art et le patrimoine">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+	<meta name="robots" content="index,follow">
+
+
+
+	<link rel="stylesheet" type="text/css" href=".\node_modules\bootstrap\dist\css\bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="style.css">
+
+	<script src="index.js" defer></script>
+	<script src="https://kit.fontawesome.com/18b7f90565.js" crossorigin="anonymous"></script>
+
+	<title>Learn English for Art</title>
+
+
+
+</head>
+<body class="bg-light">
+
+	<header class="bg-dark">
+		<div class="container">
+			<div class="row navbar-dark my-4 py-4">
+				<a href="#" class="navbar-brand ">
+					Apprends 20 mots de vocabulaire par jour !
+				</a>
+			</div>
+		</div>
+	</header>
+
+	<div class="container">
+
+		<div class="row  my-3">
+			<div class="col text-center">
+				<a href="#" role="button" class="btn btn-info shadow-lg" id="startPlay"><h1 class="">Commencer à jouer</h1></a>
+			</div>
+		</div>
+		<div class="row  my-3">
+			<div class="col text-center">
+				<a href="#" role="button" class="btn btn-info d-none p-3 shadow-lg" id="frenchWord"></a>
+				<a href="#" role="button" class="btn btn-info d-none p-3 shadow-lg " id="seeSolution">Voir la traduction !</a>
+			</div>
+		</div>
+		<div class="row  my-3">
+			<div class="col text-center d-none" id="ifSolution">
+				<a href="#" role="button" id="ok" class="btn btn-success btn-rd shadow-lg "><i class="fas fa-check"></i></a>
+				<a href="#" role="button" id="notOk" class="btn btn-danger btn-rd shadow-lg "><i class="fas fa-times"></i></a>
+			</div>
+		</div>
+		<div class="row  my-3">
+			<div class="col text-right">
+				<!--d-none-->
+				<a class="btn btn-info">
+					<div class="d-flex">
+						<div class="mx-1">Score</div>
+						<div class="mx-1" id="score"> </div>
+						<div class="mx-1">/</div>
+						<div class="mx-1" id="scoreCumule"></div>
+					</div>
+				</a>
+			</div>
+		</div>
+	</div>
+
+	
+
+
+</body>
+</html>
