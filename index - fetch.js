@@ -10,6 +10,13 @@ let play = document.getElementById("play");
 
 
 
+fetch("https://api.sheety.co/eede0453ece453875813dd1ca1a7d3a4/vocabulary/total")
+    .then(response => response.json())
+    .then(response => alert(JSON.stringify(response)))
+    .catch(error => alert("Erreur : " + error));
+
+
+
 
 
 // pour que ca puisse marcher correctement, il faut que je travaille sur les promesses sinon au premier chargement, ca met toujours null 
