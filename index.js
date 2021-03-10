@@ -8,11 +8,24 @@ let play = document.getElementById("play");
 
 
 
+/*
 
+if (localStorage.getItem("berthotVocab2") === null) { // si la clé berthotvocab n'est pas créé // équivalent panier vide
+    fetch("https://api.sheety.co/eede0453ece453875813dd1ca1a7d3a4/vocabulary/total")
+        .then((resp) => resp.json())
+        .then(function (data) {
+            let reponse_json = JSON.stringify(data); // transforme en texte l'array reponse
+            return localStorage.setItem("berthotVocab2", reponse_json); // le renvoie dans le localStorage
 
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+};
+*/
 
-
-// pour que ca puisse marcher correctement, il faut que je travaille sur les promesses sinon au premier chargement, ca met toujours null 
+/*
+// pour que ca puisse marcher correctement, il faut que je travaille sur les promesses sinon au premier chargement, ca met toujours null
 
 if (localStorage.getItem("berthotVocab") === null) { // si la clé berthotvocab n'est pas créé // équivalent panier vide
     // on lance la requête vers l'API
@@ -37,9 +50,35 @@ else {
     play.classList.remove("d-none");
 };
 
-
 let vocablist = JSON.parse(localStorage.getItem("berthotVocab")); // récupère berthot dans le localStorage et le transforme en JSON
-console.log(vocablist);
+
+
+*/
+
+
+let vocablist;
+
+async function init() {
+    if (localStorage.getItem("berthotVocab3") === null) {
+        const response = await fetch('https://api.sheety.co/eede0453ece453875813dd1ca1a7d3a4/vocabulary/total');
+        const response_json = await response.json();
+        localStorage.setItem("berthotVocab3", JSON.stringify(response_json));
+        vocablist = JSON.parse(localStorage.getItem("berthotVocab3")); // récupère berthot dans le localStorage et le transforme en JSON
+        
+    }
+    else {
+        vocablist = JSON.parse(localStorage.getItem("berthotVocab3")); // récupère berthot dans le localStorage et le transforme en JSON
+        
+    }
+};
+
+init();
+
+
+
+console.log("test récup vocablist " + vocablist);
+
+play.classList.remove("d-none");
 
 // fonction newWord pour récupérer de nouveaux mots
  
