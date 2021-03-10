@@ -2,42 +2,36 @@
 
 // définition des mots français et anglais, 
 
-let frenchWordRandom ;
+let frenchWordRandom;
 let englishWordRandom;
 let play = document.getElementById("play");
-
-init();
-
-async function init() {
-  if (localStorage.getItem("berthotVocab") === null) { 
-    const response = await fetch('https://api.sheety.co/eede0453ece453875813dd1ca1a7d3a4/vocabulary/total');
-    const response_json = await response.json();
-    localStorage.setItem("berthotVocab", JSON.stringify(response_json));
-  }
-};
+let vocablist;
 
 play.classList.remove("d-none")
-let vocablist = JSON.parse(localStorage.getItem("berthotVocab")); // récupère berthot dans le localStorage et le transforme en JSON
-console.log(vocablist);	
 
 
-// fonction newWord pour récupérer de nouveaux mots
- 
-function newWord() {
-    
-let arrayPpal = vocablist.total;
+async function newWord() {
 
-console.log(arrayPpal); // affiche comme au-dessus
-let wordsTotal = arrayPpal.length // récupère la longueur de l'array
-console.log(wordsTotal); // affiche la longueur de l'array 
+    if (vocablist === null || vocablist === undefined) {
+        const response = await fetch('https://api.sheety.co/eede0453ece453875813dd1ca1a7d3a4/vocabulary/total');
+        const response_json = await response.json();
+        localStorage.setItem("berthotVocab", JSON.stringify(response_json));
+        vocablist = response_json;
+    }
 
-let randomIndex = Math.round(Math.random() * (wordsTotal - 1)); // récupère un chiffre entre 0 et la total de l'array - 1
-console.log(randomIndex);
-let objectRandom = arrayPpal[randomIndex]; // sélectionne l'objet correspondant au chiffre aléatoire récupéré
-console.log(objectRandom);
-frenchWordRandom = objectRandom.frenchWord; // récupère le mot français 
-console.log(frenchWordRandom);
-englishWordRandom = objectRandom.englishWord; // récupère le mot anglais 
+    let arrayPpal = vocablist.total;
+
+    console.log(arrayPpal); // affiche comme au-dessus
+    let wordsTotal = arrayPpal.length // récupère la longueur de l'array
+    console.log(wordsTotal); // affiche la longueur de l'array 
+
+    let randomIndex = Math.round(Math.random() * (wordsTotal - 1)); // récupère un chiffre entre 0 et la total de l'array - 1
+    console.log(randomIndex);
+    let objectRandom = arrayPpal[randomIndex]; // sélectionne l'objet correspondant au chiffre aléatoire récupéré
+    console.log(objectRandom);
+    frenchWordRandom = objectRandom.frenchWord; // récupère le mot français 
+    console.log(frenchWordRandom);
+    englishWordRandom = objectRandom.englishWord; // récupère le mot anglais 
     console.log(englishWordRandom);
 };
 
@@ -49,7 +43,7 @@ let startPlay = document.getElementById('startPlay');
 let scoreNb = 0;
 let scoreCumuleNb = 0;
 
-startPlay.addEventListener('click',  function (jouer) {
+startPlay.addEventListener('click', function (jouer) {
     jouer.preventDefault()
 
     // lance nouveau mot
@@ -73,7 +67,7 @@ startPlay.addEventListener('click',  function (jouer) {
         seeSolution.classList.remove('d-none');
     }
     setTimeout(solution, 1500);
-    
+
 });
 
 
@@ -82,7 +76,7 @@ showSolution.addEventListener('click', function (traduction) {
     traduction.preventDefault()
     var traduction = document.getElementById('frenchWord');
     traduction.textContent = englishWordRandom;
-    console.log(frenchWordRandom + "deuxième test mot français"); 
+    console.log(frenchWordRandom + "deuxième test mot français");
     var hideSolution = document.getElementById('seeSolution');
     hideSolution.classList.add('d-none');
 
@@ -111,7 +105,7 @@ resultOk.addEventListener('click', function (event) {
 
     if (scoreCumuleNb < 19) {
 
-        
+
         // lance nouveau mot
         newWord();
 
@@ -121,7 +115,7 @@ resultOk.addEventListener('click', function (event) {
         afficheScore.textContent = scoreNb;
         var afficheScoreCumule = document.getElementById('scoreCumule');
         afficheScoreCumule.textContent = scoreCumuleNb;
-;
+        ;
 
         // affichage d'un nouveau mot français 
         var play = document.getElementById('frenchWord');
@@ -140,8 +134,8 @@ resultOk.addEventListener('click', function (event) {
         btnRond.classList.add('d-none');
     }
     else {
-        
-       
+
+
 
         scoreNb++;
         scoreCumuleNb++;
@@ -153,19 +147,19 @@ resultOk.addEventListener('click', function (event) {
         var btnRond = document.getElementById('ifSolution');
         btnRond.classList.add('d-none');
         function zero() {
-        scoreNb = 0;
-        scoreCumuleNb = 0;
-        let startPlay = document.getElementById('startPlay');
-        startPlay.classList.remove('d-none');
+            scoreNb = 0;
+            scoreCumuleNb = 0;
+            let startPlay = document.getElementById('startPlay');
+            startPlay.classList.remove('d-none');
 
-        var play = document.getElementById('frenchWord');
-        play.textContent = frenchWordRandom;
-        play.classList.add('d-none');
-        var afficheScore = document.getElementById('score');
-        afficheScore.textContent = scoreNb;
-        var afficheScoreCumule = document.getElementById('scoreCumule');
+            var play = document.getElementById('frenchWord');
+            play.textContent = frenchWordRandom;
+            play.classList.add('d-none');
+            var afficheScore = document.getElementById('score');
+            afficheScore.textContent = scoreNb;
+            var afficheScoreCumule = document.getElementById('scoreCumule');
             afficheScoreCumule.textContent = scoreCumuleNb;
-            
+
         }
         setTimeout(zero, 2000);
 
@@ -179,10 +173,10 @@ resultNotOk.addEventListener('click', function (event) {
     event.preventDefault();
 
     if (scoreCumuleNb < 19) {
-       
+
         // lance nouveau mot
         newWord();
-        
+
         scoreCumuleNb++;
         var afficheScoreCumule = document.getElementById('scoreCumule');
         afficheScoreCumule.textContent = scoreCumuleNb;
@@ -205,8 +199,8 @@ resultNotOk.addEventListener('click', function (event) {
         btnRond.classList.add('d-none');
     }
     else {
-        
-        
+
+
 
         scoreCumuleNb++;
         var afficheScore = document.getElementById('score');
@@ -220,7 +214,7 @@ resultNotOk.addEventListener('click', function (event) {
             scoreNb = 0;
             scoreCumuleNb = 0;
             let startPlay = document.getElementById('startPlay');
-            startPlay.classList.remove('d-none'); 
+            startPlay.classList.remove('d-none');
 
             var play = document.getElementById('frenchWord');
             play.textContent = frenchWordRandom;
@@ -229,7 +223,7 @@ resultNotOk.addEventListener('click', function (event) {
             afficheScore.textContent = scoreNb;
             var afficheScoreCumule = document.getElementById('scoreCumule');
             afficheScoreCumule.textContent = scoreCumuleNb;
-            
+
         }
         setTimeout(zero, 2000);
 

@@ -7,21 +7,29 @@ let englishWordRandom;
 let play = document.getElementById("play");
 
 
-
 /*
 
+async function test(){
 if (localStorage.getItem("berthotVocab2") === null) { // si la clé berthotvocab n'est pas créé // équivalent panier vide
-    fetch("https://api.sheety.co/eede0453ece453875813dd1ca1a7d3a4/vocabulary/total")
+    return fetch("https://api.sheety.co/eede0453ece453875813dd1ca1a7d3a4/vocabulary/total")
         .then((resp) => resp.json())
         .then(function (data) {
-            let reponse_json = JSON.stringify(data); // transforme en texte l'array reponse
-            return localStorage.setItem("berthotVocab2", reponse_json); // le renvoie dans le localStorage
+            reponse_json = JSON.stringify(data); // transforme en texte l'array reponse
+            
 
         })
         .catch(function (error) {
             console.log(error);
-        });
+        })
+}
 };
+
+async function test2() {
+    await test();
+console.log("test de test2" + reponse_json);
+}
+
+test2();
 */
 
 /*
@@ -63,26 +71,29 @@ async function init() {
         const response = await fetch('https://api.sheety.co/eede0453ece453875813dd1ca1a7d3a4/vocabulary/total');
         const response_json = await response.json();
         localStorage.setItem("berthotVocab3", JSON.stringify(response_json));
-        vocablist = JSON.parse(localStorage.getItem("berthotVocab3")); // récupère berthot dans le localStorage et le transforme en JSON
+        vocablist = await JSON.parse(localStorage.getItem("berthotVocab3")); // récupère berthot dans le localStorage et le transforme en JSON
+        play.classList.remove("d-none");
         
     }
     else {
         vocablist = JSON.parse(localStorage.getItem("berthotVocab3")); // récupère berthot dans le localStorage et le transforme en JSON
-        
+        play.classList.remove("d-none");
     }
 };
+
 
 init();
 
 
-
 console.log("test récup vocablist " + vocablist);
 
-play.classList.remove("d-none");
+
 
 // fonction newWord pour récupérer de nouveaux mots
  
 function newWord() {
+
+
     
 let arrayPpal = vocablist.total;
 
