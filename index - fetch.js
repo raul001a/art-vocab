@@ -1,76 +1,49 @@
 // JavaScript source code
 
-// définition des mots français et anglais, 
+// dÃ©finition des mots franÃ§ais et anglais, 
 
 let frenchWordRandom ;
 let englishWordRandom;
 let play = document.getElementById("play");
 
+init();
 
-
-
-
-fetch("https://api.sheety.co/eede0453ece453875813dd1ca1a7d3a4/vocabulary/total")
-    .then(response => response.json())
-    .then(response => alert(JSON.stringify(response)))
-    .catch(error => alert("Erreur : " + error));
-
-
-
-
-
-// pour que ca puisse marcher correctement, il faut que je travaille sur les promesses sinon au premier chargement, ca met toujours null 
-
-if (localStorage.getItem("berthotVocab") === null) { // si la clé berthotvocab n'est pas créé // équivalent panier vide
-    // on lance la requête vers l'API
-    let apiRequest = new XMLHttpRequest();
-    apiRequest.onreadystatechange = function () {
-        if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
-            let reponse = JSON.parse(this.responseText);
-            console.log(reponse);
-            let reponse_json = JSON.stringify(reponse); // transforme en texte l'array reponse
-            localStorage.setItem("berthotVocab", reponse_json); // le renvoie dans le localStorage
-            console.log("test localstorage");
-            play.classList.remove("d-none");
-        }
-    };
-
-    apiRequest.open("GET", "https://api.sheety.co/eede0453ece453875813dd1ca1a7d3a4/vocabulary/total");
-    apiRequest.send();
-    console.log("local storage rempli avec le résultat de l'API")
-
-}
-else {
-    play.classList.remove("d-none");
+async function init() {
+  if (localStorage.getItem("berthotVocab") === null) { 
+    const response = await fetch('https://api.sheety.co/eede0453ece453875813dd1ca1a7d3a4/vocabulary/total');
+    const response_json = await response.json();
+    localStorage.setItem("berthotVocab", JSON.stringify(response_json));
+  }
 };
 
+play.classList.remove("d-none")
+let vocablist = JSON.parse(localStorage.getItem("berthotVocab")); // rÃ©cupÃ¨re berthot dans le localStorage et le transforme en JSON
+console.log(vocablist);	
 
-let vocablist = JSON.parse(localStorage.getItem("berthotVocab")); // récupère berthot dans le localStorage et le transforme en JSON
-console.log(vocablist);
 
-// fonction newWord pour récupérer de nouveaux mots
+// fonction newWord pour rÃ©cupÃ©rer de nouveaux mots
  
 function newWord() {
     
 let arrayPpal = vocablist.total;
 
 console.log(arrayPpal); // affiche comme au-dessus
-let wordsTotal = arrayPpal.length // récupère la longueur de l'array
+let wordsTotal = arrayPpal.length // rÃ©cupÃ¨re la longueur de l'array
 console.log(wordsTotal); // affiche la longueur de l'array 
 
-let randomIndex = Math.round(Math.random() * (wordsTotal - 1)); // récupère un chiffre entre 0 et la total de l'array - 1
+let randomIndex = Math.round(Math.random() * (wordsTotal - 1)); // rÃ©cupÃ¨re un chiffre entre 0 et la total de l'array - 1
 console.log(randomIndex);
-let objectRandom = arrayPpal[randomIndex]; // sélectionne l'objet correspondant au chiffre aléatoire récupéré
+let objectRandom = arrayPpal[randomIndex]; // sÃ©lectionne l'objet correspondant au chiffre alÃ©atoire rÃ©cupÃ©rÃ©
 console.log(objectRandom);
-frenchWordRandom = objectRandom.frenchWord; // récupère le mot français 
+frenchWordRandom = objectRandom.frenchWord; // rÃ©cupÃ¨re le mot franÃ§ais 
 console.log(frenchWordRandom);
-englishWordRandom = objectRandom.englishWord; // récupère le mot anglais 
+englishWordRandom = objectRandom.englishWord; // rÃ©cupÃ¨re le mot anglais 
     console.log(englishWordRandom);
 };
 
 
 
-// commencer à jouer quand on clique 
+// commencer Ã  jouer quand on clique 
 
 let startPlay = document.getElementById('startPlay');
 let scoreNb = 0;
@@ -88,13 +61,13 @@ startPlay.addEventListener('click',  function (jouer) {
     console.log(frenchWordRandom); // 
 
 
-    // afficher le mot en français
+    // afficher le mot en franÃ§ais
     var play = document.getElementById('frenchWord');
     play.classList.remove('d-none');
     play.textContent = frenchWordRandom;
 
 
-    // afficher le bouton "afficher la solution après 1,5 secondes
+    // afficher le bouton "afficher la solution aprÃ¨s 1,5 secondes
     function solution() {
         var seeSolution = document.getElementById('seeSolution');
         seeSolution.classList.remove('d-none');
@@ -109,7 +82,7 @@ showSolution.addEventListener('click', function (traduction) {
     traduction.preventDefault()
     var traduction = document.getElementById('frenchWord');
     traduction.textContent = englishWordRandom;
-    console.log(frenchWordRandom + "deuxième test mot français"); 
+    console.log(frenchWordRandom + "deuxiÃ¨me test mot franÃ§ais"); 
     var hideSolution = document.getElementById('seeSolution');
     hideSolution.classList.add('d-none');
 
@@ -129,7 +102,7 @@ afficheScore.textContent = scoreNb;
 var afficheScoreCumule = document.getElementById('scoreCumule');
 afficheScoreCumule.textContent = scoreCumuleNb;
 
-// quand on clique sur check, change le score et le score cumulé
+// quand on clique sur check, change le score et le score cumulÃ©
 
 var resultOk = document.getElementById('ok');
 
@@ -150,12 +123,12 @@ resultOk.addEventListener('click', function (event) {
         afficheScoreCumule.textContent = scoreCumuleNb;
 ;
 
-        // affichage d'un nouveau mot français 
+        // affichage d'un nouveau mot franÃ§ais 
         var play = document.getElementById('frenchWord');
         play.textContent = frenchWordRandom;
         play.classList.remove('d-none');
 
-        // afficher le bouton "afficher la solution après 3 secondes
+        // afficher le bouton "afficher la solution aprÃ¨s 3 secondes
         function solution() {
             var seeSolution = document.getElementById('seeSolution');
             seeSolution.classList.remove('d-none');
@@ -199,7 +172,7 @@ resultOk.addEventListener('click', function (event) {
     };
 });
 
-// quand on clique sur cross, cela ne change que le score cumulé
+// quand on clique sur cross, cela ne change que le score cumulÃ©
 var resultNotOk = document.getElementById('notOk');
 
 resultNotOk.addEventListener('click', function (event) {
@@ -215,13 +188,13 @@ resultNotOk.addEventListener('click', function (event) {
         afficheScoreCumule.textContent = scoreCumuleNb;
 
 
-        // affichage d'un nouveau mot français 
+        // affichage d'un nouveau mot franÃ§ais 
         var play = document.getElementById('frenchWord');
 
         play.textContent = frenchWordRandom;
         play.classList.remove('d-none');
 
-        // afficher le bouton "afficher la solution après 3 secondes
+        // afficher le bouton "afficher la solution aprÃ¨s 3 secondes
         function solution() {
             var seeSolution = document.getElementById('seeSolution');
             seeSolution.classList.remove('d-none');
@@ -263,7 +236,6 @@ resultNotOk.addEventListener('click', function (event) {
     };
 
 });
-
 
 
 
