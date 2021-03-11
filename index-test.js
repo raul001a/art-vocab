@@ -7,62 +7,39 @@ let englishWordRandom;
 let play = document.getElementById("play");
 
 
-/*
+
 
 async function test(){
 if (localStorage.getItem("berthotVocab2") === null) { // si la clé berthotvocab n'est pas créé // équivalent panier vide
     return fetch("https://api.sheety.co/eede0453ece453875813dd1ca1a7d3a4/vocabulary/total")
-        .then((resp) => resp.json())
+        .then(function (reponse) {
+            return reponse.json();
+        })
         .then(function (data) {
-            reponse_json = JSON.stringify(data); // transforme en texte l'array reponse
+            return reponse_json = JSON.stringify(data); // transforme en texte l'array reponse    
             
-
         })
         .catch(function (error) {
-            console.log(error);
+            console.log("erreur de chargement de l'API" + error);
         })
 }
 };
 
+let vocablist;
+
 async function test2() {
-    await test();
-console.log("test de test2" + reponse_json);
+    const result = await test();
+    localStorage.setItem("berthotVocab3", result); // le met dans le local storage
+    vocablist = JSON.parse(localStorage.getItem("berthotVocab3"));
+    console.log(vocablist);
 }
 
 test2();
-*/
+
+// si je clique vite sur le bouton commencer avant que l'API soit chargée, cela ne fonctionnera pas
+
 
 /*
-// pour que ca puisse marcher correctement, il faut que je travaille sur les promesses sinon au premier chargement, ca met toujours null
-
-if (localStorage.getItem("berthotVocab") === null) { // si la clé berthotvocab n'est pas créé // équivalent panier vide
-    // on lance la requête vers l'API
-    let apiRequest = new XMLHttpRequest();
-    apiRequest.onreadystatechange = function () {
-        if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
-            let reponse = JSON.parse(this.responseText);
-            console.log(reponse);
-            let reponse_json = JSON.stringify(reponse); // transforme en texte l'array reponse
-            localStorage.setItem("berthotVocab", reponse_json); // le renvoie dans le localStorage
-            console.log("test localstorage");
-            play.classList.remove("d-none");
-        }
-    };
-
-    apiRequest.open("GET", "https://api.sheety.co/eede0453ece453875813dd1ca1a7d3a4/vocabulary/total");
-    apiRequest.send();
-    console.log("local storage rempli avec le résultat de l'API")
-
-}
-else {
-    play.classList.remove("d-none");
-};
-
-let vocablist = JSON.parse(localStorage.getItem("berthotVocab")); // récupère berthot dans le localStorage et le transforme en JSON
-
-
-*/
-
 
 let vocablist;
 
@@ -87,8 +64,9 @@ init();
 
 
 console.log("test récup vocablist " + vocablist);
+*/
 
-
+play.classList.remove("d-none");
 
 // fonction newWord pour récupérer de nouveaux mots
  
